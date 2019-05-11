@@ -205,7 +205,7 @@ module.exports = {
 
     // Forbid certain props on Components
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/forbid-component-props.md
-    'react/forbid-component-props': ['error', { forbid: ['ref'] }],
+    'react/forbid-component-props': ['off'],
 
     // Prevent problem with children and props.dangerouslySetInnerHTML
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-danger-with-children.md
@@ -226,11 +226,14 @@ module.exports = {
     //   beforeSelfClosing: 'always',
     //   afterOpening: 'never'
     // }],
+    'react/jsx-tag-spacing': ['error', { beforeSelfClosing: 'always' }],
 
     // Enforce spaces before the closing bracket of self-closing JSX elements
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-tag-spacing.md
+    'react/jsx-tag-spacing': ["error", { "beforeSelfClosing": "always" }],
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-space-before-closing.md
     // Deprecated in favor of jsx-tag-spacing
-    'react/jsx-space-before-closing': ['error', 'always'],
+    // 'react/jsx-space-before-closing': ['error', 'always'],
 
     // // Prevent usage of Array index in keys
     // // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md

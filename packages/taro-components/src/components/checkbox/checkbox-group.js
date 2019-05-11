@@ -1,3 +1,4 @@
+import 'weui'
 import Nerv from 'nervjs'
 
 class CheckboxGroup extends Nerv.Component {
@@ -6,21 +7,34 @@ class CheckboxGroup extends Nerv.Component {
     this.state = {
       value: []
     }
+    this.uniqueName = Date.now().toString(36)
     this.toggleChange = this.toggleChange.bind(this)
   }
 
   toggleChange (e, i) {
     this.state.value[i] = {
-      name: e.target.value,
-      value: e.target.textContent,
+      name: e.target.textContent,
+      value: e.target.value,
       checked: e.target.checked
     }
+    const resp = []
+    this.state.value.forEach(v => {
+      if (v.checked) {
+        resp.push(v.value)
+      }
+    })
     const { onChange } = this.props
-    onChange({ detail: { value: this.state.value } })
+    Object.defineProperty(e, 'detail', {
+      enumerable: true,
+      value: {
+        value: resp
+      }
+    })
+    onChange && onChange(e)
   }
 
   render () {
-    const { name = '' } = this.props
+    const { name = this.uniqueName } = this.props
     // 给 children 绑定事件
     const children = Nerv.Children.toArray(this.props.children).map(
       (item, i) => {
@@ -29,14 +43,14 @@ class CheckboxGroup extends Nerv.Component {
           if (ch.name === 'Checkbox') {
             if (ch.props.checked) {
               this.state.value[i] = {
-                name: ch.props.value,
-                value: ch.props.children.props.children,
+                name: ch.props.name,
+                value: ch.props.value,
                 checked: true
               }
             } else {
               this.state.value[i] = {
-                name: ch.props.value,
-                value: ch.props.children.props.children,
+                name: ch.props.name,
+                value: ch.props.value,
                 checked: false
               }
             }

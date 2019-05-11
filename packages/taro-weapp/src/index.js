@@ -4,45 +4,61 @@ import {
   Events,
   eventCenter,
   ENV_TYPE,
+  createRef,
   render,
   internal_safe_get,
   internal_safe_set,
-  internal_dynamic_recursive
+  internal_inline_style,
+  internal_get_original,
+  interceptors,
+  useEffect,
+  useLayoutEffect,
+  useReducer,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  useImperativeHandle
 } from '@tarojs/taro'
 
 import Component from './component'
 import PureComponent from './pure-component'
 import createApp from './create-app'
-import createPage from './create-page'
+import createComponent from './create-component'
 import initNativeApi from './native-api'
+import propsManager from './propsManager'
+import { getElementById, genCompid } from './util'
 
-export {
+export const Taro = {
   Component,
   PureComponent,
   createApp,
-  createPage,
   initNativeApi,
   Events,
   eventCenter,
   getEnv,
+  createRef,
   render,
   ENV_TYPE,
   internal_safe_get,
   internal_safe_set,
-  internal_dynamic_recursive
+  internal_inline_style,
+  createComponent,
+  internal_get_original,
+  getElementById,
+  propsManager,
+  interceptors,
+  genCompid,
+  useEffect,
+  useLayoutEffect,
+  useReducer,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  useImperativeHandle
 }
 
-export default {
-  Component,
-  createApp,
-  createPage,
-  initNativeApi,
-  Events,
-  eventCenter,
-  getEnv,
-  render,
-  ENV_TYPE,
-  internal_safe_get,
-  internal_safe_set,
-  internal_dynamic_recursive
-}
+export default Taro
+
+initNativeApi(Taro)

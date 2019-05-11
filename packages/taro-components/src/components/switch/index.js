@@ -1,3 +1,4 @@
+import 'weui'
 import Nerv from 'nervjs'
 import omit from 'omit.js'
 import classNames from 'classnames'
@@ -16,23 +17,56 @@ class Switch extends Nerv.Component {
     this.state = {
       checked: this.props.checked
     }
+    this.switchChange = this.switchChange.bind(this)
+  }
+
+  switchChange (e) {
+    const { onChange } = this.props
+    Object.defineProperty(e, 'detail', {
+      enumerable: true,
+      value: {
+        value: e.target.checked
+      }
+    })
+    onChange && onChange(e)
+    this.setState({
+      checked: e.target.checked
+    })
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.hasOwnProperty('checked')) {
+      this.setState({
+        checked: nextProps.checked
+      })
+    }
   }
 
   render () {
-    const { onChange, type = 'switch', className } = this.props
+    const { type = 'switch', className, color } = this.props
     const cls = classNames(
       {
         [`weui-${parseType(type)}`]: true
       },
       className
     )
+    let sty
+    if (this.state.checked) {
+      sty = {
+        borderColor: color || '04BE02',
+        backgroundColor: color || '04BE02'
+      }
+    } else {
+      sty = ''
+    }
     return (
       <input
         {...omit(this.props, ['className', 'checked', 'onChange'])}
         className={cls}
         checked={this.state.checked}
         type='checkbox'
-        onChange={onChange}
+        onChange={this.switchChange}
+        style={sty}
       />
     )
   }

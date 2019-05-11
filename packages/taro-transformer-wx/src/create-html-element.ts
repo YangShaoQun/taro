@@ -1,29 +1,19 @@
+import { Adapters, Adapter } from './adapter'
+import { quickappComponentName } from './constant'
+import { transformOptions } from './options'
+import { camelCase } from 'lodash'
+import { isTestEnv } from './env'
+
 const voidHtmlTags = new Set<string>([
-  'area',
-  'base',
-  'basefont',
-  'bgsound',
-  'br',
-  'col',
-  'command',
-  'embed',
-  'frame',
-  'hr',
-  'image',
+  // 'image',
   'img',
   'input',
-  'isindex',
-  'keygen',
-  'link',
-  'menuitem',
-  'meta',
-  'nextid',
-  'param',
-  'source',
-  'track',
-  'wbr',
   'import'
 ])
+
+if (isTestEnv) {
+  voidHtmlTags.add('image')
+}
 
 interface Options {
   name: string,
@@ -58,7 +48,7 @@ function stringifyAttributes (input: object) {
 
 }
 
-export const createHTMLElement = (options: Options) => {
+export const createHTMLElement = (options: Options, isFirstEmit = false) => {
   options = Object.assign(
     {
       name: 'div',
@@ -67,6 +57,24 @@ export const createHTMLElement = (options: Options) => {
     },
     options
   )
+
+  if (Adapters.quickapp === Adapter.type) {
+    const name = options.name
+    const nameCapitalized = name.charAt(0).toUpperCase() + name.slice(1)
+    if (quickappComponentName.has(nameCapitalized)) {
+      options.name = `taro-${name}`
+    }
+    if (isFirstEmit && name === 'div' && transformOptions.isRoot) {
+      options.name = 'taro-page'
+      for (const key in options.attributes) {
+        if (options.attributes.hasOwnProperty(key)) {
+          const attr = options.attributes[key]
+          options.attributes[camelCase(key)] = attr
+          delete options.attributes[key]
+        }
+      }
+    }
+  }
 
   const isVoidTag = voidHtmlTags.has(options.name)
 

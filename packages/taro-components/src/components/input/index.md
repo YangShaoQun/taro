@@ -6,12 +6,12 @@ input
 | ------------ | ----------------- | ----------- | ------ | --------------------------------------------------------------------------------------------------------------- |
 | √            | value             | String      |        | 输入框的初始内容                                                                                                |
 | √            | type              | String      | 23     | input 的类型                                                                                                    |
-| √            | password          | Color       |        | 是否是密码类型                                                                                                  |
+| √            | password          | Boolean       |        | 是否是密码类型                                                                                                  |
 | √            | placeholder       | String      |        | 输入框为空时占位符                                                                                              |
 |              | placeholder-style | String      |        | 指定 placeholder 的样式                                                                                         |
 |              | placeholder-class | String      |        | 指定 placeholder 的样式类                                                                                       |
 | √            | disabled          | Boolean     |        | 是否禁用                                                                                                        |
-| √            | maxlength         | Number      |        | 最大输入长度，设置为 -1 的时候不限制最大长度                                                                    |
+| √            | maxLength         | Number      |        | 最大输入长度，设置为 -1 的时候不限制最大长度                                                                    |
 |              | cursor-spacing    | Number      |        | 指定光标与键盘的距离，单位 px 。取 input 距离底部的距离和 cursor-spacing 指定的距离的最小值作为光标与键盘的距离 |
 |              | auto-focus        | Boolean     |        | (即将废弃，请直接使用 focus )自动聚焦，拉起键盘                                                                 |
 |              | focus             | Boolean     |        | 获取焦点                                                                                                        |

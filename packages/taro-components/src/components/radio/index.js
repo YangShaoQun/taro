@@ -1,3 +1,4 @@
+import 'weui'
 import Nerv from 'nervjs'
 import omit from 'omit.js'
 import classNames from 'classnames'
@@ -8,11 +9,11 @@ class Radio extends Nerv.Component {
   }
 
   render () {
-    const { onChange, className, checked, name } = this.props
+    const { onChange, className, checked, name, style } = this.props
     const key = this.props.for
     const cls = classNames('weui-check', className)
     return (
-      <span className='weui-cells_checkbox'>
+      <span className='weui-cells_checkbox' style={style}>
         <input
           {...omit(this.props, [
             'className',
@@ -20,12 +21,13 @@ class Radio extends Nerv.Component {
             'onChange',
             'name',
             'id',
-            'type'
+            'type',
+            'style'
           ])}
           id={key}
           type='radio'
           name={name}
-          class={cls}
+          className={cls}
           checked={checked}
           onChange={onChange}
         />
